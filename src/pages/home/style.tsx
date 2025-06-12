@@ -49,6 +49,11 @@ const Main = styled.main `
                     font-weight: bold;
                     font-size: 18px;
                     color: #fff;
+                    & > div{
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
                 }
              }
         }
@@ -77,6 +82,23 @@ const Main = styled.main `
             padding: 14px;
             text-align: center;
         }
+
+        img{
+            width: 20px;
+            height: 20px;
+            transition: transform .3s;
+            &:hover{
+                transform: scale(1.5);
+            }
+        }
+    }
+
+    & > button{
+        background-color: #30beff;
+        padding: 8px 24px;
+        color: #fff;
+        margin: 14px 0;
+        border-radius: 14px;
     }
 
     @media(max-width:600px){
@@ -91,6 +113,15 @@ const Main = styled.main `
              position: absolute;
              width: 1px;
              padding: 0;
+          }
+          tbody{
+               tr{
+                   td{
+                       & > div{
+                          justify-content: flex-end;
+                       }
+                   }
+               }
           }
           tr{
              border-bottom: 1px solid #DDD;
