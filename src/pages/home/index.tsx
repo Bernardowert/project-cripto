@@ -4,7 +4,7 @@ import { BsSearch } from "react-icons/bs";
 import { useEffect, useState, type FormEvent } from "react";
 
 
-interface CoinProps{
+export interface CoinProps{
     id:string;
     name:string;
     symbol:string;
@@ -30,16 +30,17 @@ interface DataProp{
 export function Home() {
   const[input,setInput] = useState("");
   const[coins, setCoins] = useState<CoinProps[]>([]);
+  const [offset, setOffset] = useState(0);
 
   const navigate = useNavigate();
 
   useEffect(() => {
        getData();
-  },[])
+  },[offset]);
 
 
   async function getData(){
-      fetch("https://rest.coincap.io/v3/assets?limit=10&offset=0&apiKey=406c75bc5a972308a8783b61c9c6637ceb9c4a1d04708389a883160aacb9f0fc")
+      fetch(`https://rest.coincap.io/v3/assets?limit=10&offset=${offset}&apiKey=406c75bc5a972308a8783b61c9c6637ceb9c4a1d04708389a883160aacb9f0fc`)
       .then(response => response.json())
       .then((data:DataProp) =>{
           const coinsData = data.data;
@@ -65,7 +66,7 @@ export function Home() {
           })
 
 
-          setCoins(formatedResult);
+          setCoins([...coins, ...formatedResult]);
       })
   }
 
@@ -79,7 +80,12 @@ export function Home() {
 
 
    function handleGetMore(){
-      console.log("teste");
+      if(offset === 0){
+         setOffset(10);
+         return;
+      }
+
+      setOffset(prev => prev + 10);
    }
 
 
